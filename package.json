@@ -2,10 +2,16 @@
   "name": "webvr",
   "version": "1.0.0",
   "description": "A foray into WebVR",
+  "scripts": {
+    "start": "nodemon -e html server.js"
+  },
   "main": "main.js",
   "author": "Terry O'Shea",
   "license": "MIT",
   "dependencies": {
     "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.11"
   }
 }
