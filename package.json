@@ -4,5 +4,8 @@
   "description": "A foray into WebVR",
   "main": "main.js",
   "author": "Terry O'Shea",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
 }
