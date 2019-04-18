@@ -1,0 +1,8 @@
+{
+  "name": "webvr",
+  "version": "1.0.0",
+  "description": "A foray into WebVR",
+  "main": "main.js",
+  "author": "Terry O'Shea",
+  "license": "MIT"
+}
