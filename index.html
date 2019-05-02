@@ -1,23 +1,60 @@
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Terry's First WebVR</title>
-        <script src="https://aframe.io/releases/0.9.0/aframe.min.js"></script>
-        <script src="public/main.js"></script>
-    </head>
-    <body>
-        <a-scene>
-            <a-assets>
-                <img id="wallpaper" src="public/assets/vintage-concrete.png"></img>
-            </a-assets>
-
-            <a-box src="#wallpaper" position="-1 0.5 -3" rotation="0 45 0"></a-box>
-            <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E">
-                <a-ring position="1 1 2" color="#B96FD3"></a-ring>
-            </a-sphere>
-            <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
-            <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
-            <a-sky color="#ECECEC"></a-sky>
-        </a-scene>
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>A-Frame Super Hands Component - 6DOF With Physics</title>
+    <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+    <script src="https://unpkg.com/super-hands/dist/super-hands.min.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v3.1.2/dist/aframe-physics-system.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@^4.1.1/dist/aframe-event-set-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-physics-extras/dist/aframe-physics-extras.min.js"></script>
+    <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
+    <script src="/main.js"></script>
+  </head>
+  
+  <body>
+    <a-scene
+      physics
+      environment="shadow: true; groundColor: #117c13; groundColor2: #117c13"
+      avatar-recorder
+      touch-to-click-converter
+    >
+      <a-assets>
+        <img
+          id="rock-texture"
+          src="https://cdn.glitch.com/17ca8e32-65fc-4e06-b8e3-a465b588d131%2Frock.png?1556766690247"
+        />
+        <a-mixin
+          id="cube"
+          geometry="primitive: box; width: 0.5; height: 1; depth: 0.25"
+          material="src: #rock-texture"
+          hoverable grabbable stretchable draggable droppable shadow dynamic-body
+          event-set__dragdrop="_event: drag-drop; geometry.radius: 0.25"
+          event-set__hoveron="_event: hover-start; material.opacity: 0.7; transparent: true"
+          event-set__hoveroff="_event: hover-end; material.opacity: 1; transparent: false"
+        >
+        </a-mixin>
+      </a-assets>
+      <a-entity
+        camera look-controls wasd-controls capture-mouse
+        position="0 1 1"
+        raycaster="objects: .cube" cursor="rayOrigin:mouse"
+        static-body="shape: sphere; sphereRadius: 0.001"
+        super-hands="colliderEvent: raycaster-intersection;
+                     colliderEventProperty: els;
+                     colliderEndEvent:raycaster-intersection-cleared;
+                     colliderEndEventProperty: clearedEls;"
+      >
+      </a-entity>
+      
+      <a-entity class="cube" mixin="cube" position="0 1 -1.25"></a-entity>
+      <a-entity class="cube" mixin="cube" position="0 1.6 -1.5"></a-entity>
+      <a-entity class="cube" mixin="cube" position="-0.9 1 -0.9"></a-entity>
+      <a-entity class="cube" mixin="cube" position="-1 1.6 -1"></a-entity>
+      <a-entity class="cube" mixin="cube" position="0.9 1 -0.9"></a-entity>
+      <a-entity class="cube" mixin="cube" position="1 1.6 -1"></a-entity>
+      
+      <!-- ground collider keeps objects from falling -->
+      <a-box static-body width="100" height="0.001" depth="100" visible="false"></a-box>
+    </a-scene>
+  </body>
 </html>
